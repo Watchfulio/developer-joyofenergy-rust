@@ -1,0 +1,17 @@
+[package]
+name = "developer_joyofenergy_rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "joi"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.7.7"
+chrono = { version = "0.4.38", features = ["serde"] }
+rand = "0.8.5"
+serde = { version = "1.0.210", features = ["derive"] }
+tokio = { version = "1.40.0", features = ["macros", "rt-multi-thread"] }
