@@ -118,7 +118,7 @@ ___
 Add energy readings for a smart meter.
 
 ```
-POST /readings/store
+POST /readings/create
 ```
 
 #### Request body
@@ -167,7 +167,7 @@ curl \
 
 #### Returns
 ```
-Readings stored successfully
+Readings created successfully
 ```
 
 
