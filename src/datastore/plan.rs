@@ -6,8 +6,10 @@ use std::collections::HashMap;
 #[derive(Clone, Debug)]
 pub struct PricePlan {
     pub supplier_id: String,
+    #[allow(dead_code)]
     pub plan_name: String,
     pub unit_rate: f64,
+    #[allow(dead_code)]
     pub rate_multipliers: HashMap<Weekday, f64>,
 }
 
