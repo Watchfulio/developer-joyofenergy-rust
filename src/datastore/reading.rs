@@ -2,7 +2,7 @@ use chrono::{DateTime, Duration, FixedOffset, Local};
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct ElectricityReading {
     pub time: DateTime<FixedOffset>,
     pub reading: f64,
