@@ -15,7 +15,7 @@ pub async fn get_readings(
     let stored_readings = data_store
         .get_readings(&smart_meter_id)
         .iter()
-        .map(|reading| GetElectricityReadingResponse::from(reading))
+        .map(GetElectricityReadingResponse::from)
         .collect::<Vec<GetElectricityReadingResponse>>();
 
     Ok(Json(stored_readings))

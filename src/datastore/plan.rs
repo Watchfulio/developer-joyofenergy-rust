@@ -23,7 +23,7 @@ impl PartialEq<Self> for PricePlan {
 
 impl PartialOrd<Self> for PricePlan {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.unit_rate.partial_cmp(&other.unit_rate)
+        Some(self.cmp(other))
     }
 }
 
@@ -66,7 +66,7 @@ impl PricePlan {
         average_hourly_usage * self.unit_rate
     }
 
-    fn average_reading(stored_readings: &Vec<ElectricityReading>) -> f64 {
+    fn average_reading(stored_readings: &[ElectricityReading]) -> f64 {
         if stored_readings.is_empty() {
             return 0.0;
         }
@@ -74,7 +74,7 @@ impl PricePlan {
         readings_sum / stored_readings.len() as f64
     }
 
-    fn total_hours_elapsed(stored_readings: &Vec<ElectricityReading>) -> f64 {
+    fn total_hours_elapsed(stored_readings: &[ElectricityReading]) -> f64 {
         if stored_readings.is_empty() {
             return 0.0;
         }
