@@ -31,13 +31,13 @@ pub async fn build() -> Router {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use axum::body::to_bytes;
     use axum::{
         body::Body,
         http::{Request, StatusCode},
     };
-    use tower::ServiceExt;
-    use axum::body::to_bytes;
     use serde_json::{json, Value};
+    use tower::ServiceExt;
 
     async fn setup() -> Router {
         build().await
@@ -74,7 +74,7 @@ mod tests {
     }
 
     #[tokio::test]
-     async fn test_get_readings() {
+    async fn test_get_readings() {
         let app = setup().await;
 
         // First create some readings
@@ -85,7 +85,8 @@ mod tests {
             ]
         });
 
-        let _ = app.clone()
+        let _ = app
+            .clone()
             .oneshot(
                 Request::builder()
                     .method("POST")
@@ -136,7 +137,8 @@ mod tests {
             ]
         });
 
-        let _ = app.clone()
+        let _ = app
+            .clone()
             .oneshot(
                 Request::builder()
                     .method("POST")

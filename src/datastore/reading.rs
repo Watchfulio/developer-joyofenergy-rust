@@ -1,15 +1,15 @@
-use chrono::{DateTime, Duration, FixedOffset, Local};
 use rand::Rng;
 use serde::{Deserialize, Serialize};
+use time::{Duration, OffsetDateTime};
 
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct ElectricityReading {
-    pub time: DateTime<FixedOffset>,
+    pub time: OffsetDateTime,
     pub reading: f64,
 }
 
 impl ElectricityReading {
-    pub fn new(time: DateTime<FixedOffset>, reading: f64) -> Self {
+    pub fn new(time: OffsetDateTime, reading: f64) -> Self {
         Self { time, reading }
     }
 
@@ -32,7 +32,7 @@ impl ElectricityReading {
         let mut readings = Vec::new();
         let mut rng = rand::thread_rng();
 
-        let now = Local::now();
+        let now = OffsetDateTime::now_utc();
         let mut dummy_time = now;
         while dummy_time > now - Duration::days(duration) {
             let random_reading = rng.gen();

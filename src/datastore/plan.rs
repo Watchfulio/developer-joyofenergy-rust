@@ -1,7 +1,7 @@
 use crate::datastore::reading::ElectricityReading;
-use chrono::Weekday;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use time::Weekday;
 
 #[derive(Clone, Debug)]
 pub struct PricePlan {
@@ -85,6 +85,6 @@ impl PricePlan {
         // by dividing total seconds by 3600 (seconds per hour).
         // Using seconds provides more precise calculations than `num_hours()`
         // which truncates partial hours.
-        (latest.signed_duration_since(earliest).num_seconds() as f64) / 3600.0
+        ((latest - earliest).whole_seconds() as f64) / 3600.0
     }
 }
