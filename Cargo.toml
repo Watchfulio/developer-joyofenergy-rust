@@ -10,13 +10,13 @@ name = "joi"
 path = "src/main.rs"
 
 [dependencies]
-axum = "0.7.7"
+axum = "0.8.1"
 rand = "0.8.5"
-serde = { version = "1.0.210", features = ["derive"] }
+serde = { version = "1.0.217", features = ["derive"] }
 time = { version = "0.3.37", features = ["macros", "serde-human-readable", "serde-well-known"] }
-tokio = { version = "1.40.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread"] }
 
 [dev-dependencies]
-tower = { version = "0.4", features = ["util"] }
-hyper = { version = "1.0", features = ["full"] }
-serde_json = "1.0"
+tower = { version = "0.5.2", features = ["util"] }
+hyper = { version = "1.5.2", features = ["full"] }
+serde_json = "1.0.135"
