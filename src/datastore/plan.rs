@@ -1,7 +1,7 @@
 use crate::datastore::reading::ElectricityReading;
-use chrono::Weekday;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use time::Weekday;
 
 #[derive(Clone, Debug)]
 pub struct PricePlan {
@@ -23,7 +23,7 @@ impl PartialEq<Self> for PricePlan {
 
 impl PartialOrd<Self> for PricePlan {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.unit_rate.partial_cmp(&other.unit_rate)
+        Some(self.cmp(other))
     }
 }
 
@@ -66,7 +66,7 @@ impl PricePlan {
         average_hourly_usage * self.unit_rate
     }
 
-    fn average_reading(stored_readings: &Vec<ElectricityReading>) -> f64 {
+    fn average_reading(stored_readings: &[ElectricityReading]) -> f64 {
         if stored_readings.is_empty() {
             return 0.0;
         }
@@ -74,7 +74,7 @@ impl PricePlan {
         readings_sum / stored_readings.len() as f64
     }
 
-    fn total_hours_elapsed(stored_readings: &Vec<ElectricityReading>) -> f64 {
+    fn total_hours_elapsed(stored_readings: &[ElectricityReading]) -> f64 {
         if stored_readings.is_empty() {
             return 0.0;
         }
@@ -85,6 +85,6 @@ impl PricePlan {
         // by dividing total seconds by 3600 (seconds per hour).
         // Using seconds provides more precise calculations than `num_hours()`
         // which truncates partial hours.
-        (latest.signed_duration_since(earliest).num_seconds() as f64) / 3600.0
+        ((latest - earliest).whole_seconds() as f64) / 3600.0
     }
 }

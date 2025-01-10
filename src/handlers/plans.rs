@@ -64,7 +64,6 @@ pub async fn get_recommended_plans(
 #[cfg(test)]
 mod tests {
     use std::collections::{BTreeMap, HashMap};
-    use std::str::FromStr;
 
     use crate::datastore::reading::ElectricityReading;
     use crate::datastore::state::AppState;
@@ -72,7 +71,7 @@ mod tests {
     use crate::models::plans::{GetPricePlanCostResponse, GetRecommendationQueryParams};
     use axum::extract::{Path, Query, State};
     use axum::Json;
-    use chrono::DateTime;
+    use time::macros::datetime;
 
     fn make_state() -> AppState {
         AppState::default()
@@ -85,15 +84,15 @@ mod tests {
             let mut db = state.db.lock().unwrap();
             let readings = vec![
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:00:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:00:00 UTC),
                     reading: 1.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:01:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:01:00 UTC),
                     reading: 2.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:02:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:02:00 UTC),
                     reading: 3.0,
                 },
             ];
@@ -120,15 +119,15 @@ mod tests {
             let mut db = state.db.lock().unwrap();
             let readings = vec![
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:00:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:00:00 UTC),
                     reading: 1.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:01:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:01:00 UTC),
                     reading: 2.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:02:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:02:00 UTC),
                     reading: 3.0,
                 },
             ];

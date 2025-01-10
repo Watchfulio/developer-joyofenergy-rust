@@ -1,16 +1,18 @@
 use crate::datastore::reading::ElectricityReading;
-use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
+use time::OffsetDateTime;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GetElectricityReadingRequest {
-    pub time: String,
+    #[serde(with = "time::serde::rfc3339")]
+    pub time: OffsetDateTime,
     pub reading: f64,
 }
 
 #[derive(Serialize, Debug, PartialEq, Copy, Clone)]
 pub struct GetElectricityReadingResponse {
-    pub time: DateTime<FixedOffset>,
+    #[serde(with = "time::serde::rfc3339")]
+    pub time: OffsetDateTime,
     pub reading: f64,
 }
 

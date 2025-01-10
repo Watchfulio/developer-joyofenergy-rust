@@ -50,15 +50,14 @@ impl DataStore {
     }
 }
 
-// ... existing code ...
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use time::OffsetDateTime;
 
     fn create_test_reading(time: i64, reading: f64) -> ElectricityReading {
         ElectricityReading {
-            time: chrono::DateTime::from_timestamp(time, 0).unwrap().into(),
+            time: OffsetDateTime::from_unix_timestamp(time).unwrap(),
             reading: reading,
         }
     }

@@ -1,12 +1,10 @@
-use std::str::FromStr;
+use axum::extract::{Path, State};
+use axum::http::StatusCode;
+use axum::Json;
 
 use crate::datastore::reading::ElectricityReading;
 use crate::datastore::state::AppState;
 use crate::models::readings::{CreateElectricityReadingsRequest, GetElectricityReadingResponse};
-use axum::extract::{Path, State};
-use axum::http::StatusCode;
-use axum::Json;
-use chrono::DateTime;
 
 pub async fn get_readings(
     Path(smart_meter_id): Path<String>,
@@ -17,7 +15,7 @@ pub async fn get_readings(
     let stored_readings = data_store
         .get_readings(&smart_meter_id)
         .iter()
-        .map(|reading| GetElectricityReadingResponse::from(reading))
+        .map(GetElectricityReadingResponse::from)
         .collect::<Vec<GetElectricityReadingResponse>>();
 
     Ok(Json(stored_readings))
@@ -35,7 +33,7 @@ pub async fn create_readings(
         .iter()
         .map(|r| ElectricityReading {
             reading: r.reading,
-            time: DateTime::from_str(&r.time).unwrap(),
+            time: r.time,
         })
         .collect::<Vec<ElectricityReading>>();
     data_store.insert_readings(smart_meter_id, readings);
@@ -45,7 +43,9 @@ pub async fn create_readings(
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
+    use axum::extract::{Path, State};
+    use axum::Json;
+    use time::macros::datetime;
 
     use crate::datastore::reading::ElectricityReading;
     use crate::datastore::state::AppState;
@@ -54,9 +54,6 @@ mod tests {
         CreateElectricityReadingsRequest, GetElectricityReadingRequest,
         GetElectricityReadingResponse,
     };
-    use axum::extract::{Path, State};
-    use axum::Json;
-    use chrono::DateTime;
 
     fn make_state() -> AppState {
         AppState::default()
@@ -79,15 +76,15 @@ mod tests {
             smart_meter_id: "smart-meter-0".to_string(),
             electricity_readings: vec![
                 GetElectricityReadingRequest {
-                    time: "2020-11-29T08:00:00Z".to_string(),
+                    time: datetime!(2020-11-29 08:00:00 UTC),
                     reading: 1.0,
                 },
                 GetElectricityReadingRequest {
-                    time: "2020-11-29T08:01:00Z".to_string(),
+                    time: datetime!(2020-11-29 08:01:00 UTC),
                     reading: 2.0,
                 },
                 GetElectricityReadingRequest {
-                    time: "2020-11-29T08:02:00Z".to_string(),
+                    time: datetime!(2020-11-29 08:02:00 UTC),
                     reading: 3.0,
                 },
             ],
@@ -105,15 +102,15 @@ mod tests {
             let mut db = state.db.lock().unwrap();
             let readings = vec![
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:00:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:00:00 UTC),
                     reading: 1.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:01:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:01:00 UTC),
                     reading: 2.0,
                 },
                 ElectricityReading {
-                    time: DateTime::from_str("2020-11-29T08:02:00Z").unwrap(),
+                    time: datetime!(2020-11-29 08:02:00 UTC),
                     reading: 3.0,
                 },
             ];
@@ -124,15 +121,15 @@ mod tests {
 
         let expected_results = vec![
             GetElectricityReadingResponse {
-                time: DateTime::from_str("2020-11-29T08:00:00Z").unwrap(),
+                time: datetime!(2020-11-29 08:00:00 UTC),
                 reading: 1.0,
             },
             GetElectricityReadingResponse {
-                time: DateTime::from_str("2020-11-29T08:01:00Z").unwrap(),
+                time: datetime!(2020-11-29 08:01:00 UTC),
                 reading: 2.0,
             },
             GetElectricityReadingResponse {
-                time: DateTime::from_str("2020-11-29T08:02:00Z").unwrap(),
+                time: datetime!(2020-11-29 08:02:00 UTC),
                 reading: 3.0,
             },
         ];
