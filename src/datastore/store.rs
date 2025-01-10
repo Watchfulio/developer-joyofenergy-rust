@@ -58,7 +58,7 @@ mod tests {
     fn create_test_reading(time: i64, reading: f64) -> ElectricityReading {
         ElectricityReading {
             time: OffsetDateTime::from_unix_timestamp(time).unwrap(),
-            reading: reading,
+            reading,
         }
     }
 

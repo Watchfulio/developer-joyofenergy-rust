@@ -55,7 +55,7 @@ impl PricePlan {
     ///
     /// # Returns
     /// The total cost in currency units based on the plan's unit rate
-    pub fn average_hourly_cost(&self, stored_readings: &Vec<ElectricityReading>) -> f64 {
+    pub fn average_hourly_cost(&self, stored_readings: &[ElectricityReading]) -> f64 {
         if stored_readings.is_empty() {
             return 0.0;
         }
