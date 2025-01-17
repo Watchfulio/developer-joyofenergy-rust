@@ -3,17 +3,19 @@ use crate::datastore::plan::PricePlan;
 use crate::datastore::reading::ElectricityReading;
 use std::collections::HashMap;
 
+pub type SmartMeterId = String;
+
 #[derive(Debug)]
 pub struct DataStore {
-    accounts: HashMap<String, Account>,
+    accounts: HashMap<SmartMeterId, Account>,
     price_plans: Vec<PricePlan>,
-    readings: HashMap<String, Vec<ElectricityReading>>,
+    readings: HashMap<SmartMeterId, Vec<ElectricityReading>>,
 }
 
 impl DataStore {
     pub fn new(
-        accounts: HashMap<String, Account>,
-        readings: HashMap<String, Vec<ElectricityReading>>,
+        accounts: HashMap<SmartMeterId, Account>,
+        readings: HashMap<SmartMeterId, Vec<ElectricityReading>>,
         price_plans: Vec<PricePlan>,
     ) -> Self {
         Self {
@@ -23,14 +25,18 @@ impl DataStore {
         }
     }
 
-    pub fn insert_readings(&mut self, smart_meter_id: String, readings: Vec<ElectricityReading>) {
+    pub fn insert_readings(
+        &mut self,
+        smart_meter_id: SmartMeterId,
+        readings: Vec<ElectricityReading>,
+    ) {
         self.readings
             .entry(smart_meter_id)
             .or_default()
             .extend(readings);
     }
 
-    pub fn get_readings(&self, smart_meter_id: &String) -> Vec<ElectricityReading> {
+    pub fn get_readings(&self, smart_meter_id: &SmartMeterId) -> Vec<ElectricityReading> {
         self.readings
             .get(smart_meter_id)
             .cloned()
@@ -41,7 +47,7 @@ impl DataStore {
         self.price_plans.clone()
     }
 
-    pub fn get_account_supplier_id(&self, smart_meter_id: &String) -> String {
+    pub fn get_account_supplier_id(&self, smart_meter_id: &SmartMeterId) -> String {
         self.accounts
             .get(smart_meter_id)
             .unwrap()
