@@ -14,7 +14,7 @@ axum = "0.8.1"
 rand = "0.8.5"
 serde = { version = "1.0.217", features = ["derive"] }
 time = { version = "0.3.37", features = ["macros", "serde-human-readable", "serde-well-known"] }
-tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.43.1", features = ["macros", "rt-multi-thread"] }
 
 [dev-dependencies]
 tower = { version = "0.5.2", features = ["util"] }
