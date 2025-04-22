@@ -68,7 +68,7 @@ The wall you will be working from today has 7 columns:
 - Ready for sign off
 - Done
 
-Examples of Kanban boards can be found [here](https://leankit.com/learn/kanban/kanban-board/)
+Examples of Kanban boards can be found [here](https://www.planview.com/resources/guide/introduction-to-kanban/kanban-examples/)
 
 ## JOI Software
 
