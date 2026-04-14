@@ -11,7 +11,7 @@ path = "src/main.rs"
 
 [dependencies]
 axum = "0.8.1"
-rand = "0.8.5"
+rand = "0.9.3"
 serde = { version = "1.0.217", features = ["derive"] }
 time = { version = "0.3.37", features = ["macros", "serde-human-readable", "serde-well-known"] }
 tokio = { version = "1.43.1", features = ["macros", "rt-multi-thread"] }
